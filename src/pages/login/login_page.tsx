@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Wrapper from '../../components/common/wrapper';
+import { Routes, Route, Link } from 'react-router-dom';
+
 
 //더미데이터 테스트용
 const User = {
@@ -73,12 +75,16 @@ const LoginPage = () => {
         {/* 이메일 입력칸 */}
         <InputTitle>이메일 주소</InputTitle>
         <InputWrap>
+          <UserIcon>
+            <a href="https://www.flaticon.com/kr/free-icons/" title="사람 아이콘"></a>
+            <img src={require('../../assets/icon/free-icon-user-5264565.png')} alt="아이콘" />
+            </UserIcon>
           <Input
             type="text"
             value={email}
             onChange={handleEmail}
             placeholder="test@gmail.com"
-          />
+          />   
         </InputWrap>
         {/* 이메일 에러메세지 입력칸 */}
         <ErrorMessageWrap>
@@ -90,6 +96,10 @@ const LoginPage = () => {
         {/* 비밀번호 입력칸 */}
         <InputTitle style={{ marginTop: '26px' }}>비밀번호</InputTitle>
         <InputWrap>
+          <UserIcon>
+            <a href="https://www.flaticon.com/kr/free-icons/" title="키 아이콘"></a>
+            <img src={require('../../assets/icon/free-icon-key-566076.png')} alt="아이콘" />
+          </UserIcon>
           <Input
             type="password"
             value={password}
@@ -115,7 +125,10 @@ const LoginPage = () => {
       {/* 계정이 없을경우 회원가입 페이지 리로드 */}
       <NoMemberShipWrap>
         <NoMemberShip>계정이 없으신가요?</NoMemberShip>
-        <JoinMemberBtn>회원가입</JoinMemberBtn>
+        <Link to={"/joinpage"}>
+          <JoinMemberBtn>회원가입</JoinMemberBtn>
+        </Link>
+        
       </NoMemberShipWrap>
 
       {/* 구분선 */}
@@ -123,13 +136,27 @@ const LoginPage = () => {
 
       {/* 소셜로그인 */}
       <SocialLogin>SNS계정으로 로그인</SocialLogin>
+
+      {/* 소셜로그인 이모티콘 틀*/}
+      <IconWrap>
+            <Kakao>
+              <a href="https://www.flaticon.com/kr/free-icons/-" title="카카오 톡 아이콘"></a>
+              <img src={require('../../assets/icon/free-icon-kakao-talk-4494622.png')} alt="아이콘" />
+            </Kakao>
+            <Google>
+            <a href="https://www.flaticon.com/kr/free-icons/" title="구글 아이콘"></a>
+              <img src={require('../../assets/icon/free-icon-search-281764.png')} alt="아이콘" />
+            </Google>
+      </IconWrap>
+
+
     </Wrapper>
   );
 };
 
 // 회원 로그인 메인 글
 const Memvership = styled.div`
-  font-size: 40px;
+  font-size: 35px;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -140,7 +167,7 @@ const EmailPW = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 60px;
+  margin-top: 70px;
 `;
 
 // 이메일주소 , 비밀번호
@@ -148,22 +175,23 @@ const InputTitle = styled.div`
   font-size: 18px;
   font-weight: 600;
   color: #262626;
-  text-align: left;
+  
 `;
 
 //이메일, 비밀번호 입력창 틀
 const InputWrap = styled.div`
   margin-top: 5px;
   display: flex;
-  border-radius: 12px;
-  width: 700px;
+  align-items: center;
+  border-radius: 3px;
+  width: 400px;
   padding: 16px;
   border: 1px solid #e2e0e0;
   background-color: white;
-  box-shadow: 3px 3px 5px 2px gray;
+  box-shadow: 1px 1px 0.5px 0.5px gray;
 
   &:focus-within {
-    border: 1px solid #339af0;
+    border: 1.5px solid #339af0;
   }
 `;
 
@@ -181,27 +209,41 @@ const Input = styled.input`
   }
 `;
 
+//이메일 아이콘
+const UserIcon = styled.image`
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 24px; 
+    height: 24px; 
+    margin-right: 20px; 
+  
+  }
+`
+
 //이메일, 비밀번호 에러 메세지
 const ErrorMessageWrap = styled.div`
   margin-top: 10px;
   color: #ef0000;
   font-size: 14px;
 `;
+
 //버튼 정렬해주는 기능
 const BtnCenter = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-//이메일, 비밀번호 입력 후 submit 버튼
+//이메일, 비밀번호 입력 후 로그인 submit 버튼
 const SubmitBtn = styled.button`
   display: flex;
   justify-content: center;
   margin-top: 5px;
   margin-bottom: 40px;
   display: flex;
-  border-radius: 12px;
-  width: 700px;
+  border-radius: 3px;
+  width: 400px;
   padding: 16px;
   border: 1px solid #e2e0e0;
   background-color: #339af0;
@@ -243,7 +285,7 @@ const JoinMemberBtn = styled.p`
 //구분선
 const Divider = styled.div`
   width: 100%;
-  height: 3px;
+  height: 1px;
   background-color: #e2e2e2;
   margin-top: 30px;
 `;
@@ -257,5 +299,36 @@ const SocialLogin = styled.div`
   margin-top: 50px;
   color: #339af0;
 `;
+
+//소셜 로그인 아이콘 틀
+const IconWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+`
+
+//카카오 로그인 아이콘
+const Kakao = styled.image`
+  flex-wrap: nowrap;
+  
+  img {
+    width: 80px; 
+    height: 80px; 
+    margin-right: 50px; 
+  
+  }
+`
+
+//구글 로그인 아이콘
+const Google = styled.image`
+  flex-wrap: nowrap;
+
+  img {
+    width: 80px; 
+    height: 80px; 
+    margin-right: 20px; 
+  
+  }
+`
 
 export default LoginPage;
