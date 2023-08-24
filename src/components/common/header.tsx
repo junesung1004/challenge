@@ -154,6 +154,11 @@ const Header = () => {
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
+
+  const token = 'token';
+  const user = localStorage.getItem(token);
+  console.log('user', user);
+
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
   });
@@ -202,9 +207,30 @@ const Header = () => {
             <LoginItem>
               <StyledCiUser />
               <SubMenu>
-                <InnerLi>로그인</InnerLi>
-                <InnerLi>회원가입</InnerLi>
-                <InnerLi>마이페이지</InnerLi>
+              {!user ? (
+                  <>
+                    <Link to={'/login'}>
+                      <InnerLi>로그인</InnerLi>
+                    </Link>
+                    <Link to={'/joinpage'}>
+                      <InnerLi>회원가입</InnerLi>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link to={'mypage'}>
+                      <InnerLi>마이페이지</InnerLi>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        localStorage.removeItem('token');
+                        window.location.reload();
+                      }}
+                    >
+                      <InnerLi>로그아웃</InnerLi>
+                    </button>
+                  </>
+                )}
               </SubMenu>
             </LoginItem>
           </LoginList>
