@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
-import addDays from 'date-fns/addDays';
 
 const StyledDatePicker = styled(DatePicker)`
   width: 406px;
@@ -14,24 +13,17 @@ const StyledDatePicker = styled(DatePicker)`
   padding: 0 15px;
 `;
 
-const ReactDatePicker = ({ joinningDate, setDate }) => {
+const ReactDatePicker2 = ({ startDate, setDate }) => {
   return (
     <StyledDatePicker
       selectsRange={true}
-      startDate={joinningDate[0]}
-      endDate={joinningDate[1]}
+      startDate={startDate[0]}
+      endDate={startDate[1]}
       dateFormat="yyyy년MM월dd일"
       onChange={(update) => {
-        const startDate = new Date(update);
-        let endDate = new Date(update);
-        endDate = new Date(endDate.setDate(endDate.getDate() + 4));
-
-        console.log('update', update);
-        console.log('endDate', endDate);
-
         setDate((prev) => ({
           ...prev,
-          joinningDate: [startDate, endDate],
+          startDate: update,
         }));
       }}
       isClearable={false}
@@ -40,5 +32,6 @@ const ReactDatePicker = ({ joinningDate, setDate }) => {
     />
   );
 };
+// endDate={endDate ? addDays(startDate, 4) : null} ->4일범위만설정됨
 
-export default ReactDatePicker;
+export default ReactDatePicker2;
